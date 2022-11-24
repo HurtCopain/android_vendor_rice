@@ -1,5 +1,5 @@
 ===================================
-  Source Changes as of 11-23-2022
+  Source Changes as of 11-24-2022
 ===================================
 
   * android
@@ -14,12 +14,23 @@
   - rice: Track our fork of sm8250 display hal  [minaripenguin]
 
   * android_art
+  - Fix potential memory leaks  [Chih-Hung Hsieh]
+  - Clean up `IndirectReferenceTable` visiting.  [Vladimir Marko]
+  - Accept comparison of instance-of with the constant 2  [Santiago Aboy Solanes]
+  - Clean up `IndirectReferenceTable` construction.  [Vladimir Marko]
+  - Reject boot images if there is a read barrier state mismatch.  [Jiakai Zhang]
+  - Reland "Ensure we initialize before pushing the method invoked."  [Nicolas Geoffray]
   - [MTE] untag stack on DoLongJump  [Florian Mayer]
   - Improve `CanMethodUseNterp()`.  [Vladimir Marko]
   - Update native GC roots page-by-page  [Lokesh Gidra]
   - Revert "Disable shared method memory optimization."  [Nicolas Geoffray]
+  - Reduce stress allocations for JVM for 905-object-free  [Sorin Basca]
+  - Fix errorprone warnings that should be errors  [Cole Faust]
+  - Fix the wrong log verbose switch name for Art's lock atrace  [Zhao Qin]
+  - JNI: Fix local reference leak for exceptional path.  [Vladimir Marko]
 
   * android_bionic
+  - avx2 implementation for math apis  [ahs]
   - [MTE] Never upgrade MTE mode for zygote.  [Florian Mayer]
   - Allow init to upgrade MTE to sync.  [Florian Mayer]
   - memtag_stack: vfork and longjmp support.  [Evgenii Stepanov]
@@ -58,6 +69,24 @@
   - Sync with upstream NetBSD.  [Elliott Hughes]
   - if_nameindex: Fix the failure for subinterfaces  [Theres Kuttappan]
   - fdsan: fix overflow in FdTableImpl::at  [Benjamin Lerman]
+  - Verify that allocated memory is always zeroed.  [Christopher Ferris]
+  - Switch to jemalloc memory allocator  [Danny Lin]
+  - fix undefined out-of-bounds accesses in sched.h  [Daniel Micay]
+  - libc: Do not nullify `__dtoa_locks`  [minaripenguin]
+  - Rewrite function definitions with identifier lists  [Yi Kong]
+  - Sync libm with upstream freebsd.  [Elliott Hughes]
+  - Sync with upstream openbsd.  [Elliott Hughes]
+  - bionic: Enable -O3  [dkati]
+  - Adjust the calculation method of pc  [周至捷]
+  - libc:Enable thinLTO for note_memtag_heap_async & note_memtag_heap_sync  [Gabor Meszaros]
+  - libc: Set __bionic_asm_align to 64 for arm and arm64  [Jake Weinstein]
+  - arm64: use llvm's builtins for lround/lroundf/llround/llroundf.  [Jake Weinstein]
+  - arm64: use llvm's builtins for copysign() and copysignf().  [Elliott Hughes]
+  - arm64: fix fesetround().  [Elliott Hughes]
+  - arm64: simplify the fenv implementation a bit.  [Elliott Hughes]
+  - Fix it to call the lambda function  [Suchang Woo]
+  - Use builtins for fma/fmax/fmin/nearbyint/rint/round/trunc on 32-bit ARM  [Jake Weinstein]
+  - Revert "Revert "arm64: Use builtin for nearbyintf/nearbyint""  [Jake Weinstein]
 
   * android_build
   - Add bluetooth and sdk_sandbox to default key map  [HZ]
@@ -71,6 +100,17 @@
   - check_boot_jars: Add Lineage SDK packages  [LuK1337]
   - Tweak Soong install rules logging  [Alessandro Astone]
   - build/checkRAM: update recommendations based on LTO builds  [John Galt]
+
+  * android_external_arm-optimized-routines
+  - Merge branch 'master' into thirteen  [hydrangea07]
+  - pl/math: Add scalar & vector/Neon cbrtf  [Joe Ramsay]
+  - pl/math: Add scalar and vector/Neon atanhf  [Joe Ramsay]
+  - AOR: remove MTE versions of strcpy/stpcpy/strcmp/strncmp  [Jake Weinstein]
+  - Build the optimized memset().  [Elliott Hughes]
+  - Add mem*, str* functions to baremetal static lib  [Pierre-Clément Tosi]
+  - Add library for core memory routines.  [Andrew Walbran]
+  - Build the optimized memcpy() and memmove().  [Elliott Hughes]
+  - Merge branch 'master' into thirteen  [minaripenguin]
 
   * android_external_harfbuzz_ng
   - harfbuzz: Enable whole program devirtualization  [minaripenguin]
@@ -87,8 +127,24 @@
   - MediaCodec: manage resources for sw video codecs  [Girish]
   - ACodec: Block setSurface during OutputPortSettingsChangedState  [Sungtak Lee]
   - C2BqBuffer: resolve 3 way deadlock  [Sungtak Lee]
+  - libstagefright_writer_fuzzer : Bug Fix  [Ayushi Khopkar]
+  - Fix arguments checking in AudioSystem::canBeSpatialized  [Ram Mohan]
+  - audioflinger: fix -Wdefaulted-function-deleted warning.  [Krzysztof Kosiński]
+  - Fix arguments checking in AudioSystem::getDirectProfilesForAttributes  [Mikhail Naganov]
+  - Fix unqualified-std-cast-call compiler warning  [donghongweng]
+  - fix potential read null pointer  [Xu Lai]
+  - Fix passing of ExtraAudioDescriptors to audio HAL  [Mikhail Naganov]
+  - SimpleC2Component: Fix YUV to RGB conversion for 10-bit decode  [Harish Mahendrakar]
+  - codec2: Fix nsec to msec conversion in C2Fence  [Lubin Yin]
+  - Fix race condition in thread creation  [Keith Mok]
+  - Fix module-file name collisions  [Cole Faust]
+  - Fix conditional log line in MediaPlayerService  [Santiago Seifert]
+  - CCodec: fix update pixelFormatInfo for pre-S  [guochuang]
 
   * android_frameworks_base
+  - fix qs internet tile icon  [hydrangea07]
+  - [quick panel] fix to avoid unnecessary DisableRecord creation  [Yongjin-Oh]
+  - Reduce the number of binders  [Liangliang Sui]
   - NavigationBarEdgePanel: Make the gesture duration always valid  [LibXZR]
   - SystemUI: Fix the initialization of custom volume styles  [minaripenguin]
   - SystemUI: Fix QRScanner's shorcut visibility on AOD mode  [minaripenguin]
@@ -139,6 +195,33 @@
   - PixelPropsUtils: Allow toggling netflix spoofing  [minaripenguin]
   - noop - fix 'jobject -> jclass' in native jni code signature.  [Maciej Żenczykowski]
   - Fix virtual display cannot be relased.  [linkai]
+  - Fix kotlin deprecation warnings  [Cole Faust]
+  - identity: Fix uncompressed form encoding of P-256 EC Public Key.  [David Zeuthen]
+  - AudioService: RecordActivityMonitor: fix unbounded list growth  [Mikhail Naganov]
+  - Fix broken anchor tags.  [Bob Badour]
+  - Fix unused-but-set-variable warnings  [Yi Kong]
+  - Fix ATRACE_TAG redefinition in SysTrace.h  [Zim]
+  - Fix more kotlin 1.7.0 errors  [Colin Cross]
+  - Added check for user info is not null  [Mayank Garg]
+  - Fix module-file name collisions  [Cole Faust]
+  - fix: isMultiUserSupported in TestDevice does not reflect real value  [Anna Bauza]
+  - Fix SuspendPackageHelperTest after Kotlin 1.7.20  [Chaohui Wang]
+  - Fix error message being cut off.  [Christopher Ferris]
+  - Merge pull request #6 from manidweep/thirteen  [minaripenguin]
+  - PixelPropsUtils: Allow disabling netflix spoofing Set persist.pixelpropsutils.spoof_netflix to true to opt in of netflix spoofing if, say, the device supports Dolby Vision or has HDR.  [ghostrider-reborn]
+  - QsSystemInfo Rework  [spkal01]
+  - DeviceIdleJobsController: don't ignore whitelisted system apps  [Dmitry Muhomor]
+  - SystemUI: Fix black screen after DOZE  [maxwen]
+  - Scarlet Services: Remove synchandler implementations  [minaripenguin]
+
+  * android_frameworks_libs_systemui
+  - iconloaderlib: Force themed icon over app monochrome icon  [Pranav Vashi]
+  - Override IconProvider class for IconPack support  [DennySPb]
+  - Add support for overriding of IconProvider  [DennySPb]
+  - iconloaderlib: Create new int array for hue calculation if tmp is too small  [Amir Zaidi]
+  - iconloaderlib: Apply alpha from child icon to adaptive icon wrapper  [Amir Zaidi]
+  - iconloaderlib: Add config hint to bypass adaptive icon wrapping  [Amir Zaidi]
+  - iconloaderlib: Invalidate icon cache between OS releases  [Daniel Micay]
 
   * android_frameworks_native
   - libbinder: no temp rpc sess leak w spurious wakeup  [Steven Moreland]
@@ -168,11 +251,24 @@
   - Only report PASS_THROUGH when VK_EXT_swapchain_colorspace enabled  [Jason Macnak]
 
   * android_hardware_interfaces
+  - hidl_defaults: use thinlto  [John Galt]
   - health: actually remove CAP_BLOCK_SUSPEND  [hydrangea07]
   - audio: Add audio_policy_configuration.xsd for the parser  [Mikhail Naganov]
   - USB Gadget v1.2: Remove redundant rndis gadget linking  [Roman Stratiienko]
   - health: remove CAP_BLOCK_SUSPEND  [Zhipeng Wang]
   - Revert "fpc: keep fpc in system-background"  [Jake Weinstein]
+  - Fix the problem that the data field of Entry in the verifyLogicalOrUltraHighResCameraMetadata function is empty  [kongchenrui]
+  - Fix incorrect indentation.  [Elliott Hughes]
+  - Fix unqualified-std-cast-call compiler warning  [donghongweng]
+  - fix segmentation fault of GraphicsComposerAidlCommandTest  [JihCheng Chiu]
+  - Fix module-file name collisions  [Cole Faust]
+  - audio: Fix HAL reply handling in CompressedOffloadOutputStreamTest  [Mikhail Naganov]
+  - [BugFix] open ir hal lib to support aidl ir service  [sangweilin]
+  - Fix VTS Fuzz issue  [xiaoshun.xu]
+  - Fix typo in property name  [Tri Vo]
+  - Fix array-parameter warning  [Chih-Hung Hsieh]
+  - Fix a couple of regular expressions.  [Elliott Hughes]
+  - Fix out-of-memory error.  [Chih-Hung Hsieh]
 
   * android_hardware_qcom_audio
   - audio: hal: Enable thinLTO optimizations  [minaripenguin]
@@ -201,6 +297,7 @@
   - GameSpace: Drop lock gesture tile  [cjh1249131356]
 
   * android_packages_apps_Launcher3
+  - clear task snapshots remnants on 'onRecentsAnimationComplete'  [hydrangea07]
   - Launcher3: Do not attach cleanupScreenshot() to frame update event  [LibXZR]
   - Revert "Launcher3: Restore blur depth on configuration change"  [minaripenguin]
   - Launcher3: Do not attempt to show promise icon when info is null  [Amir Zaidi]
@@ -210,6 +307,32 @@
   - SushiLauncher: Rework MeminfoView available ram calculation  [minaripenguin]
   - Introduce memory info in overview  [LibXZR]
   - SushiLauncher: Improve overview paddings  [minaripenguin]
+  - Launcher: Bottomsheet: Don't make package source pref clickable  [minaripenguin]
+  - Launcher3: Do not set hardcoded colors for widget background  [Pranav Vashi]
+  - Launcher3: Use proper icon provider in LauncherAppState  [Pranav Vashi]
+  - Launcher3: Remove repeated strings in app info  [Pranav Vashi]
+  - Launcher3: Switch to icon pack theming preview  [Pranav Vashi]
+  - Launcher3: Make icon pack support themed icons  [Pranav Vashi]
+  - Launcher3: Add Icon Pack Support from Shade Launcher [SQUASHED]  [Amir Zaidi]
+  - Launcher3: Make Bottomsheet AppInfo strings translatable  [Pranav Vashi]
+  - Launcher3: Just say "System" instead of "Unknown" for app source  [Jyotiraditya]
+  - Launcher3: Fix NPE with AppInfoBottomSheet  [Pranav Vashi]
+  - Launcher3: SystemShortcuts: Fix fc with InfoBottomSheet  [Ali B]
+  - Launcher3: Add AppInfo Bottom Sheet from Shade Launcher  [Amir Zaidi]
+  - Revert "Launcher3: Refresh icon config on icon change"  [minaripenguin]
+  - Revert "Launcher3: Add support for icon packs"  [minaripenguin]
+  - Revert "Launcher3: Use a custom icon factory to decide icon wrapping"  [minaripenguin]
+  - Revert "Launcher: Adapt iconpack UI to Android 12 style"  [minaripenguin]
+  - Revert "Launcher3: Make icon preview with 8 icons"  [minaripenguin]
+  - Enable local colors for popup menu items  [Danny Lin]
+  - Launcher3: Fix icon palette crashes  [Pranav Vashi]
+  - Launcher3: Fixup themed local color overrides  [Nauval Rizky]
+  - Launcher3: Respect color/chroma override  [Anay Wadhera]
+  - Launcher3: Use custom LocalColorExtractor implementation  [Danny Lin]
+  - Launcher3: LocalColorExtractor: Adapt for Android 12L  [Danny Lin]
+  - Launcher3: LocalColorExtractor: Disable local colors when using system presets  [Danny Lin]
+  - IconPalette: Don't crash when the app gives us an invalid color  [Ido Ben-Hur]
+  - Launcher3: Implement LocalColorExtractor using colorkt-based theme engine  [Danny Lin]
 
   * android_packages_apps_LineageParts
   - Add a null check to taskbar switch  [minaripenguin]
@@ -217,12 +340,19 @@
   * android_packages_apps_RiceDroidSettings
   - rice: Setup default lockscreen customization values [2/2]  [minaripenguin]
   - rice: Improve system boost feature  [minaripenguin]
+  - rice: Allow toggling netflix spoofing  [minaripenguin]
+
+  * android_packages_apps_Settings
+  - Settings: Reduce about phone wallpaper scrim's alpha  [minaripenguin]
 
   * android_packages_providers_MediaProvider
+  - MediaProvider: Less spam  [Michael W]
+  - MediaProvider: Bring in the new icon  [Asher Simonds]
   - MediaProvider: Enable new photopicker API  [minaripenguin]
   - Use Device Config flag for GET_CONTENT takeover feature  [Abhijeet Kaur]
 
   * android_system_core
+  - init_first_stage defaults: disable LTO  [John Galt]
   - Fix module-file name collisions  [Cole Faust]
   - sh_binary_host for 'adb-remount-test.sh'.  [jiajia tang]
   - Added libinit_headers to Android.bp  [Devendra Singhi]
@@ -234,6 +364,17 @@
   - Upgrade MTE to SYNC after ASYNC crash.  [Florian Mayer]
   - init: Apply the NormalIoProfile when creating a service  [Bart Van Assche]
   - init: Reduce the number of system calls  [Bart Van Assche]
+  - Fix scudo fault address processing.  [liyong]
+  - Fix incorrect use of TEMP_FAILURE_RETRY  [Yi Kong]
+  - sparse_fuzzer: Bug fix  [Devendra Singhi]
+  - init/epoll: Fix a potential use-after-free  [Bart Van Assche]
+  - Fix bug in WriteStringToFileAtomic  [Kelvin Zhang]
+  - Harden CrasherTest::Trap under sanitizers.  [Evgenii Stepanov]
+  - libsnapshot: fix -Wdefaulted-function-delete warnings.  [Krzysztof Kosiński]
+  - Fix build breakage on -user build  [Yi-Yo Chiang]
+  - Fix for Cannot load etc/recovery.fstab when doing OTA upgrade  [daren.liao]
+  - Fix clang error about incompatible assignment in simg2simg.cpp  [rapperskull]
+  - init: Fix HandleSignalFd()  [Bart Van Assche]
 
   * android_system_sepolicy
   - Add property for MTE permissive mode.  [Florian Mayer]
@@ -282,6 +423,7 @@
   - UdfpsResources: Add more resources from Realme RMX3392  [AnierinB]
 
   * android_vendor_rice
+  - sync source changelogs  [hydrangea07]
   - rice: Bump to v8.5  [hydrangea07]
   - overlay: Cleanup pinned services  [minaripenguin]
 
