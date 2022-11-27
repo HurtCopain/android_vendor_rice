@@ -117,6 +117,58 @@ else
 PRODUCT_COPY_FILES += vendor/lineage/bootanimation/bootanimation.zip:$(TARGET_COPY_OUT_PRODUCT)/media/bootanimation.zip
 endif
 
+# Disable vendor restrictions
+PRODUCT_RESTRICT_VENDOR_FILES := false
+
+# Do not include art debug targets
+PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
+
+# Strip the local variable table and the local variable type table to reduce
+# the size of the system image. This has no bearing on stack traces, but will
+# leave less information available via JDWP.
+PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
+
+# Enable whole-program R8 Java optimizations for SystemUI and system_server,
+# but also allow explicit overriding for testing and development.
+SYSTEM_OPTIMIZE_JAVA ?= true
+SYSTEMUI_OPTIMIZE_JAVA ?= true
+
+# Dex/ART optimization
+PRODUCT_DEXPREOPT_SPEED_APPS += \
+    Settings \
+    Launcher3QuickStep \
+    SystemUI
+
+# Don't compile SystemUITests
+EXCLUDE_SYSTEMUI_TESTS := true
+
+ifneq ($(wildcard vendor/google/modules/.),)
+# Flatten APEXs for performance
+OVERRIDE_TARGET_FLATTEN_APEX := true
+# This needs to be specified explicitly to override ro.apex.updatable=true from
+# # prebuilt vendors, as init reads /product/build.prop after /vendor/build.prop
+PRODUCT_PRODUCT_PROPERTIES += ro.apex.updatable=false
+endif
+
+# Dedupe VNDK libraries with identical core variants
+TARGET_VNDK_USE_CORE_VARIANT := true
+
+# Speed profile services and wifi-service to reduce RAM and storage
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
+
+# Use a generic profile based boot image by default
+PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
+PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := art/build/boot/boot-image-profile.txt
+
+ifeq ($(TARGET_SUPPORTS_64_BIT_APPS), true)
+# Use 64-bit dex2oat for better dexopt time.
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat64.enabled?=true
+endif
+
+PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+    dalvik.vm.systemuicompilerfilter=speed
+
 PRODUCT_PROPERTY_OVERRIDES += \
     pm.dexopt.boot?=verify \
     pm.dexopt.first-boot?=quicken \
