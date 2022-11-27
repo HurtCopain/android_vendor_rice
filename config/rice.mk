@@ -27,7 +27,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 # HWUI
 PRODUCT_PRODUCT_PROPERTIES += \
     debug.renderengine.backend?=skiaglthreaded \
-    debug.hwui.renderer?=skiagl \
+    persist.sys.hwui.renderer?=skiagl \
     debug.renderthread.skia.reduceopstasksplitting?=true
 
 # Media
