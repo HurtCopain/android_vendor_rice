@@ -184,6 +184,7 @@ endif
 PRODUCT_PACKAGES += \
     GameSpace \
     RepainterServicePriv \
+    ParallelSpacePrebuilt \
     OmniJaws \
     OPWidget \
     Updater
