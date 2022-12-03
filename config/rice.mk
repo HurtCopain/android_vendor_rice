@@ -191,7 +191,8 @@ PRODUCT_PACKAGES += \
     ParallelSpacePrebuilt \
     OmniJaws \
     OPWidget \
-    Updater
+    Updater \
+    GoogleCamera
     
 ifeq ($(TARGET_USE_PIXEL_FINGERPRINT), true)
 BUILD_FINGERPRINT := "google/cheetah/cheetah:13/TD1A.221105.003/9229241:user/release-keys"
