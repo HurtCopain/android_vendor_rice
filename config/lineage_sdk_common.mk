@@ -18,7 +18,29 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
     system/framework/oat/%/org.lineageos.platform.odex \
     system/framework/oat/%/org.lineageos.platform.vdex \
     system/framework/org.lineageos.platform-res.apk \
-    system/framework/org.lineageos.platform.jar
+    system/framework/org.lineageos.platform.jar \
+    system/app/GoogleExtShared/GoogleExtShared.apk \
+    system/app/GooglePrintRecommendationService/GooglePrintRecommendationService.apk \
+    system/app/NfcNci/NfcNci.apk \
+    system/app/NfcNci/lib/arm64/libnfc_nci_jni.so \
+    system/etc/Changelog.txt \
+    system/etc/libnfc-nci.conf \
+    system/etc/permissions/privapp-permissions-google.xml\
+    system/fonts/CutiveMono.ttf \
+    system/fonts/DroidSans-Bold.ttf \
+    system/fonts/DroidSans.ttf \
+    system/fonts/Roboto-Regular.ttf \
+    system/fonts/RobotoFallback-VF.ttf \
+    system/fonts/RobotoStatic-Regular.ttf \
+    system/lib64/android.hardware.nfc@1.0.so \
+    system/lib64/android.hardware.nfc@1.1.so \
+    system/lib64/android.hardware.nfc@1.2.so \
+    system/lib64/libnfc-nci.so \
+    system/lib64/libnfc_nci_jni.so \
+    system/media/bootanimation.zip \
+    system/priv-app/GoogleExtServices/GoogleExtServices.apk \
+    system/priv-app/TagGoogle/TagGoogle.apk \
+
 
 ifndef LINEAGE_PLATFORM_SDK_VERSION
   # This is the canonical definition of the SDK version, which defines
