@@ -26,8 +26,7 @@ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
 
 # Default notification/alarm sounds
 PRODUCT_PRODUCT_PROPERTIES += \
-    ro.config.notification_sound=oneplus.ogg \
-    ro.config.alarm_alert=into_the_night.ogg
+    ro.config.notification_sound=oneplus.ogg
 
 # HWUI
 PRODUCT_PRODUCT_PROPERTIES += \
